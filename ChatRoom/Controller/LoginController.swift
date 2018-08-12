@@ -58,50 +58,6 @@ class LoginController: UIViewController {
         
     }
     
-    @objc func handleRegister() {
-        
-        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else {
-            print("Form is not valid")
-            return
-        }
-        
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            //guard let user = authResult?.user else { return }
-            
-            guard let uid = authResult?.user.uid else {
-                return
-            }
-            
-            let ref = Database.database().reference()
-            let usersReference = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                
-                if let err = err {
-                    print(err)
-                    return
-                }
-                
-                print("Saved user successfully into Firebase db")
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            })
-
-            
-            
-            
-        }
-        
-    }
-    
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
@@ -137,12 +93,17 @@ class LoginController: UIViewController {
         tf.isSecureTextEntry = true
         return tf
     }()
+
     
-    let profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gameofthrones_splash")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        imageView.isUserInteractionEnabled = true
+        
         return imageView
     }()
     
