@@ -5,7 +5,9 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 
-class LoginController: UIViewController {
+class LoginController: UIViewController{
+    
+    var messagesController: MessagesController?
     
     let inputsContainerView: UIView = {
         let view = UIView()
@@ -52,6 +54,8 @@ class LoginController: UIViewController {
             }
             
             //successfully logged in our user
+            
+            self.messagesController?.fetchUserAndSetupNavBarTitle()
             self.dismiss(animated: true, completion: nil)
             
         })

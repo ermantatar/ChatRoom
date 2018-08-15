@@ -38,12 +38,14 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
 
             //successfully authenticated user
             let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
-
-            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
-
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+            //
+            if let profileImage = self.profileImageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
+                
+                
+                
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-
+                    
                     if let error = error {
                         print(error)
                         return
@@ -60,11 +62,15 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                         
                         self.registerUserIntoDatabaseWithUID(uid, values: values as [String : AnyObject])
                         
-
+                        
                         
                     }
                 })
             }
+            //
+            
+            
+            
         }
     }
 
@@ -78,6 +84,11 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 print(err)
                 return
             }
+            
+            //self.messagesController?.fetchUserAndSetupNavBarTitle()
+            //self.messagesController?.navigationItem.title = values["name"] as? String
+            let user = User(dictionary: values)
+            self.messagesController?.setupNavBarWithUser(user)
             
             self.dismiss(animated: true, completion: nil)
         })
