@@ -107,7 +107,7 @@ class LoginController: UIViewController {
     
     lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "gameofthrones_splash")
+        imageView.image = UIImage(named: "4")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         
@@ -152,6 +152,8 @@ class LoginController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
+        //view.backgroundColor = UIColor(r: 255, g: 88, b: 100)
+        
         
         view.addSubview(inputsContainerView)
         view.addSubview(loginRegisterButton)
