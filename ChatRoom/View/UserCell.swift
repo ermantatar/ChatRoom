@@ -31,15 +31,8 @@ class UserCell: UITableViewCell {
     }
     
     fileprivate func setupNameAndProfileImage() {
-        let chatPartnerId: String?
         
-        if message?.fromId == Auth.auth().currentUser?.uid {
-            chatPartnerId = message?.toId
-        } else {
-            chatPartnerId = message?.fromId
-        }
-        
-        if let id = chatPartnerId {
+        if let id = message?.chatPartnerId() {
             let ref = Database.database().reference().child("users").child(id)
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 
@@ -54,6 +47,7 @@ class UserCell: UITableViewCell {
             }, withCancel: nil)
         }
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -73,7 +67,7 @@ class UserCell: UITableViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        //label.text = "HH:MM:SS"
+        //        label.text = "HH:MM:SS"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -105,4 +99,3 @@ class UserCell: UITableViewCell {
     }
     
 }
-

@@ -6,8 +6,8 @@
 //  Copyright © 2018 Erman Sahin Tatar. All rights reserved.
 //
 
-
 import UIKit
+import Firebase
 
 class Message: NSObject {
     
@@ -23,5 +23,8 @@ class Message: NSObject {
         self.timestamp = dictionary["timestamp"] as? NSNumber
     }
     
+    func chatPartnerId() -> String? {
+        return fromId == Auth.auth().currentUser?.uid ? toId : fromId
+    }
+    
 }
-

@@ -30,13 +30,15 @@ class NewMessageController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User(dictionary: dictionary)
-                user.id = snapshot.key 
+                user.id = snapshot.key
                 self.users.append(user)
                 
                 //this will crash because of background thread, so lets use dispatch_async to fix
                 DispatchQueue.main.async(execute: {
                     self.tableView.reloadData()
                 })
+                
+                //                user.name = dictionary["name"]
             }
             
         }, withCancel: nil)
@@ -50,7 +52,6 @@ class NewMessageController: UITableViewController {
         return users.count
     }
     
-  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         
@@ -80,3 +81,8 @@ class NewMessageController: UITableViewController {
     }
     
 }
+
+
+
+
+

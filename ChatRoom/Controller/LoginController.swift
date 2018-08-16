@@ -1,11 +1,18 @@
 
 import UIKit
-
 import Firebase
-import FirebaseDatabase
-import FirebaseAuth
+//
+//
+//
+//
+//
 
-class LoginController: UIViewController{
+//
+
+import UIKit
+import Firebase
+
+class LoginController: UIViewController {
     
     var messagesController: MessagesController?
     
@@ -32,7 +39,6 @@ class LoginController: UIViewController{
     }()
     
     @objc func handleLoginRegister() {
-        
         if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
@@ -48,14 +54,15 @@ class LoginController: UIViewController{
         
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             
-            if let error = error {
-                print(error)
+            if error != nil {
+                print(error ?? "")
                 return
             }
             
             //successfully logged in our user
             
             self.messagesController?.fetchUserAndSetupNavBarTitle()
+            
             self.dismiss(animated: true, completion: nil)
             
         })
@@ -97,7 +104,6 @@ class LoginController: UIViewController{
         tf.isSecureTextEntry = true
         return tf
     }()
-
     
     lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
